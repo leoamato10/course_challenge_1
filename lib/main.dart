@@ -36,14 +36,18 @@ class MyWidget extends StatelessWidget {
                   child: Container(
                     padding: EdgeInsets.all(10),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         TextField(
                           decoration: InputDecoration(labelText: "Title"),
                         ),
                         TextField(
                           decoration: InputDecoration(labelText: "Amount"),
-                          text,
                         ),
+                        ElevatedButton(
+                          onPressed: () {},
+                          child: Text("Add transaction"),
+                        )
                       ],
                     ),
                   ),
