@@ -1,72 +1,64 @@
-import '../models/transaction.dart';
+import 'package:course_challenge_1/models/transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class TransactionList extends StatefulWidget {
-  const TransactionList({super.key});
+class TransactionList extends StatelessWidget {
+  final List<Transaction> transactions;
 
-  @override
-  State<TransactionList> createState() => _TransactionListState();
-}
-
-class _TransactionListState extends State<TransactionList> {
-  final List<Transaction> transactions = [
-    Transaction(id: "1", amount: 10, date: DateTime.now(), title: "new Shoes"),
-    Transaction(
-        id: "2", amount: 20, date: DateTime.now(), title: "semanal groceries")
-  ];
+  TransactionList(this.transactions);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: transactions.map((tx) {
-        return Card(
-          child: Row(
-            children: <Widget>[
-              Container(
-                margin: const EdgeInsets.symmetric(
-                  vertical: 10,
-                  horizontal: 15,
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.amber[600],
-                  border: Border.all(
-                    color: Colors.purple,
-                    width: 2,
-                  ),
-                ),
-                padding: EdgeInsets.all(10),
-                child: Text(
-                  tx.amount.toString(),
+    return Container(
+      height: 300,
+      child: transactions.isEmpty
+          ? Column(
+              children: [
+                Text(
+                  "No transactions added yet",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
-                    color: Colors.purple,
+                    color: Colors.black,
                   ),
                 ),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    tx.title,
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                SizedBox(
+                  height: 20,
+                ),
+                Image.network(
+                  'https://docs.flutter.dev/assets/images/dash/dash-fainting.gif',
+                  fit: BoxFit.cover,
+                )
+              ],
+            )
+          : ListView.builder(
+              itemBuilder: ((context, index) {
+                return Card(
+                  margin: EdgeInsets.all(6),
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      radius: 30,
+                      child: Padding(
+                        padding: const EdgeInsets.all(6),
+                        child: FittedBox(
+                            child: Text("\$${transactions[index].amount}")),
+                      ),
                     ),
-                  ),
-                  Text(
-                    DateFormat().format(tx.date),
-                    style: TextStyle(
-                      color: Colors.grey,
+                    title: Text(
+                      transactions[index].title,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        color: Colors.black,
+                      ),
                     ),
+                    subtitle: Text(
+                        DateFormat.yMMMd().format(transactions[index].date)),
                   ),
-                ],
-              ),
-            ],
-          ),
-        );
-      }).toList(),
+                );
+              }),
+              itemCount: transactions.length,
+            ),
     );
   }
 }
