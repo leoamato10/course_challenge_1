@@ -3,8 +3,12 @@ import 'package:course_challenge_1/widgets/chart.dart';
 import 'package:course_challenge_1/widgets/new_transaction.dart';
 import 'package:course_challenge_1/widgets/transaction_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   runApp(MyApp());
 }
 
