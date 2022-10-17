@@ -11,26 +11,31 @@ class TransactionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return transactions.isEmpty
-        ? Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "No transactions added yet",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                  color: Colors.black,
+        ? LayoutBuilder(builder: (ctx, constraints) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "No transactions added yet",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    color: Colors.black,
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Image.network(
-                'https://docs.flutter.dev/assets/images/dash/dash-fainting.gif',
-                fit: BoxFit.cover,
-              )
-            ],
-          )
+                SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  height: constraints.maxHeight * 0.5,
+                  child: Image.network(
+                    'https://docs.flutter.dev/assets/images/dash/dash-fainting.gif',
+                    fit: BoxFit.cover,
+                  ),
+                )
+              ],
+            );
+          })
         : ListView.builder(
             itemBuilder: ((context, index) {
               return Card(
